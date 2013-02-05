@@ -34,9 +34,10 @@ public:
     E2_Device(int pinSDA, int pinSCL);
     float RH_read(void);
     float Temp_read(void);
-    unsigned char EE03_status(void);
+    unsigned char Status(void);
     float CO2_read(void);
     float CO2mean_read(void);
+    unsigned char Custom_mem_read(void);
 
 };
 

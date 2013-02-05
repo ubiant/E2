@@ -32,10 +32,12 @@ unsigned int rh_ee03 = 0;
 unsigned int temp_ee03 = 0;
 unsigned int co2_ee03 = 0;
 unsigned int co2mean_ee03 = 0;
+unsigned int internal_pointer_addr = 0;
 float rh = 0;
 float temperature = 0;
 float co2 = 0;
 float co2mean = 0;
+unsigned char information;
 
 E2_Device::E2_Device(int pinSDA, int pinSCL)
 {
@@ -246,7 +248,7 @@ float E2_Device::RH_read(void)
     return rh;
 }
 
-unsigned char E2_Device::EE03_status(void)
+unsigned char E2_Device::Status(void)
 {
     unsigned char stat_ee03;
     E2Bus_start(); // start condition for E2-Bus
@@ -332,4 +334,33 @@ float E2_Device::CO2mean_read(void)
         E2Bus_stop();
     }
     return co2mean;
+}
+
+unsigned char E2_Device::Custom_mem_read(void)
+{
+    E2Bus_start();
+    E2Bus_send(0x51); // Read from custom mem request
+    if (check_ack()==ACK)
+    {
+        information = E2Bus_read();
+        send_ack();
+        checksum_03 = E2Bus_read();
+        send_nak(); // terminate communication
+        E2Bus_stop();
+        if (((0x51 + information) % 256) == checksum_03) // checksum OK?
+        {
+            return information;
+        }
+        else {
+            return 'read_error';
+        }
+        E2Bus_stop();
+    }
+    if ( internal_pointer_addr < 255)
+    {
+        internal_pointer_addr += 1;
+    }
+    else {
+        internal_pointer_addr = 0;
+    }
 }
