@@ -15,7 +15,7 @@ void loop()
 {
   HR = hum_sensor.RH_read();
   temp = hum_sensor.Temp_read();
-  state = hum_sensor.EE03_status();
+  state = hum_sensor.Status();
   Serial.print("Humidity reading: ");
   Serial.println(HR);
   Serial.print("Temp reading: ");
