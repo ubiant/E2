@@ -2,10 +2,12 @@
   E2.h - E2 library for Arduino
   CC-BY-SA
 
-  Modified 01/2013 by Romain Bazile (romain.bazile@ubiant.com)
+  Modified 02/2013 by Romain Bazile (romain.bazile@gromain.me)
 
   CHANGELOG
   #30/01/2013: Initial release
+  #06/02/2013: Inclusion of Custom mem read and
+  #             replacement of EE03_Status by Status
 
 */
 #ifndef E2_H_INCLUDED
